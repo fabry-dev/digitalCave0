@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QT += multimedia
 QT += multimediawidgets
-TARGET = immersive
+TARGET = centralKiosk
 TEMPLATE = app
 
 QT_CONFIG -= no-pkg-config

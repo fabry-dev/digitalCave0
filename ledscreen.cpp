@@ -1,4 +1,4 @@
-#include "ledscreen.h".h"
+#include "ledscreen.h"
 #include "math.h"
 #include "qdebug.h"
 

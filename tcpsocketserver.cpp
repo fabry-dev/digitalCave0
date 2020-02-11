@@ -1,19 +1,11 @@
 #include "tcpsocketserver.h"
+#include "qdatetime.h"
 
 tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
 {
+/*
 
-    tcpServer = new QTcpServer(this);
-
-
-    if (!tcpServer->listen())
-    {
-        qDebug()<<"could not create tcp socket";
-        return;
-    }
-    else
-        qDebug()<<"starting tcp server";
-
+*/
 
 
     QString ipAddress;
@@ -36,10 +28,27 @@ tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 
 
-    qDebug()<<"The server is running on IP:"<<ipAddress<<" port:"<<tcpServer->serverPort();
+    qDebug()<<"The server is running on IP:"<<ipAddress<<" port:";//<<tcpServer->serverPort();
+
+
+    tcpServer = new QTcpServer(this);
+
+    if (!tcpServer->listen(QHostAddress(ipAddress),60000))
+    {
+        qDebug()<<"could not create tcp socket";
+        return;
+    }
+    else
+        qDebug()<<"starting tcp server";
 
 
     connect(tcpServer,SIGNAL(newConnection()),this,SLOT(gotNewConnection()));
+
+
+    QTimer *t0 = new QTimer(this);
+    connect(t0,SIGNAL(timeout()),this,SLOT(sendData()));
+    t0->start(5000);
+
 
 }
 
@@ -49,6 +58,38 @@ void tcpSocketServer::gotNewConnection()
 {
 
     qDebug()<<"nu connection!";
+
+
+   // connect(clientConnection, &QAbstractSocket::disconnected,clientConnection, &QObject::deleteLater);
+
+
+
+
+    QTcpSocket *clientConnection = tcpServer->nextPendingConnection();
+
+
+
+
+
+    clients.push_back(clientConnection);
+}
+
+
+void tcpSocketServer::sendData()
+{
+    qDebug()<<"sending";
+
+    QByteArray block;
+    QDataStream out(&block,QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_9);
+    out<<QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+
+    for(auto client:clients)
+    {
+
+    client->write(block);
+
+    }
 
 
 }
