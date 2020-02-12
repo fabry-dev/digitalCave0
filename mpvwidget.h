@@ -18,12 +18,16 @@ public:
     QSize sizeHint() const { return QSize(480, 270);}
     void loadFile(QString);
     void setLoop(bool looping);
-    void stop();
-    void play();
+
     void setCrop();
     void loadFilePaused(QString videoFile);
     unsigned int getId() const;
     void setId(unsigned int value);
+public slots:
+    void pause(void);
+    void stopAndHide(void);
+    void stop();
+    void play();
 
 signals:
     void durationChanged(int value);

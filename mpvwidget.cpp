@@ -21,6 +21,7 @@ mpvWidget::mpvWidget(QWidget *parent, Qt::WindowFlags f)
 {
 
     setlocale(LC_NUMERIC, "C");
+
     mpv = mpv::qt::Handle::FromRawHandle(mpv_create());
     if (!mpv)
         throw std::runtime_error("could not create mpv context");
@@ -92,6 +93,46 @@ void mpvWidget::stop()
     mpv_command(mpv, cmd);
 
 }
+
+
+void mpvWidget::stopAndHide(void)
+{
+
+
+    const char *cmd[] = {"pause",NULL, NULL};
+    mpv_command(mpv, cmd);
+
+     command(QStringList()<< "seek"<<"0"<<"absolute"<<"exact");
+
+    lower();
+
+}
+
+void mpvWidget::pause(void)
+{
+
+    const char *cmd[] = {"pause",NULL, NULL};
+
+    mpv_command(mpv, cmd);
+
+
+}
+
+
+
+
+
+void mpvWidget::play()
+{
+        setProperty("pause",false);
+    const char *cmd[] = {"play",NULL, NULL};
+
+    mpv_command(mpv, cmd);
+
+    raise();
+
+}
+
 
 void mpvWidget::setLoop(bool looping)
 {

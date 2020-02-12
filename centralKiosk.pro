@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QT += multimedia
 QT += multimediawidgets
+QT += multimedia
 TARGET = centralKiosk
 TEMPLATE = app
 
@@ -22,7 +23,9 @@ SOURCES += main.cpp \
     mpvwidget.cpp \
     touchscreen.cpp \
     ledscreen.cpp \
-    tcpsocketserver.cpp
+    tcpsocketserver.cpp \
+    alphaVideoPlayer.cpp \
+    videoplayer.cpp
 
 
 HEADERS  += \
@@ -30,7 +33,10 @@ HEADERS  += \
     alphaVideoPlayer \
     touchscreen.h \
     ledscreen.h \
-    tcpsocketserver.h
+    tcpsocketserver.h \
+    mpv_qt_helper.h \
+    alphaVideoPlayer.h \
+    videoplayer.h
 
 
 FORMS    +=

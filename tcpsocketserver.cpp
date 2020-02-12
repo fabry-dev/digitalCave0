@@ -3,7 +3,7 @@
 
 tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
 {
-/*
+    /*
 
 */
 
@@ -28,7 +28,7 @@ tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 
 
-    qDebug()<<"The server is running on IP:"<<ipAddress<<" port:";//<<tcpServer->serverPort();
+
 
 
     tcpServer = new QTcpServer(this);
@@ -41,14 +41,9 @@ tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
     else
         qDebug()<<"starting tcp server";
 
+     qDebug()<<"The server is running on IP:"<<ipAddress<<" port:"<<tcpServer->serverPort();
 
     connect(tcpServer,SIGNAL(newConnection()),this,SLOT(gotNewConnection()));
-
-
-    QTimer *t0 = new QTimer(this);
-    connect(t0,SIGNAL(timeout()),this,SLOT(sendData()));
-    t0->start(5000);
-
 
 }
 
@@ -56,40 +51,37 @@ tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
 
 void tcpSocketServer::gotNewConnection()
 {
-
-    qDebug()<<"nu connection!";
-
-
-   // connect(clientConnection, &QAbstractSocket::disconnected,clientConnection, &QObject::deleteLater);
-
-
-
+    // connect(clientConnection, &QAbstractSocket::disconnected,clientConnection, &QObject::deleteLater);
 
     QTcpSocket *clientConnection = tcpServer->nextPendingConnection();
-
-
-
-
-
+    qDebug()<<"new connection "<<clientConnection->peerAddress();
     clients.push_back(clientConnection);
 }
 
 
-void tcpSocketServer::sendData()
+void tcpSocketServer::sendData(QString data)
 {
-    qDebug()<<"sending";
-
     QByteArray block;
     QDataStream out(&block,QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_9);
-    out<<QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
-
+    //out<<QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+    out<<data;
     for(auto client:clients)
-    {
+        client->write(block);
 
-    client->write(block);
+    qDebug()<<"<< "<<data;
+}
 
-    }
 
 
+
+void tcpSocketServer::startVideo(void)
+{
+    sendData("start");
+}
+
+
+void tcpSocketServer::stopVideo(void)
+{
+    sendData("stop");
 }

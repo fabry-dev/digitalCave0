@@ -9,7 +9,7 @@
 #include "qmessagebox.h"
 #include "tcpsocketserver.h"
 
-#define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/PTL/ImmersiveRoom/files/"
+#define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/PTL/ImmersiveRoom/files_kiosk0/"
 
 
 
@@ -87,13 +87,14 @@ int main(int argc, char *argv[])
 
 
 
-   /* ledScreen * ls = new ledScreen(NULL,PATH);
-    ls->setGeometry(a.screens()[2]->geometry().x(),a.screens()[2]->geometry().y(),1152,960);
-    ls->showFullScreen();*/
+    ledScreen * ls = new ledScreen(NULL,PATH);
+    ls->setGeometry(a.screens()[0]->geometry().x(),a.screens()[0]->geometry().y(),1920,1080);
+    ls->showFullScreen();
 
 
 
-
+    a.connect(ls,SIGNAL(msgVideoStart()),server,SLOT(startVideo()));
+    a.connect(ls,SIGNAL(msgVideoStop()),server,SLOT(stopVideo()));
 
 
     return a.exec();
