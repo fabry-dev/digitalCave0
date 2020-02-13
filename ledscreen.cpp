@@ -72,6 +72,8 @@ void ledScreen::keyPressEvent(QKeyEvent *ev)
         startVideo();
 
     }
+   else if(ev->key() == 16777216)
+        exit(0);
 
 }
 
