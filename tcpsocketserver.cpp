@@ -45,6 +45,7 @@ tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
 
     connect(tcpServer,SIGNAL(newConnection()),this,SLOT(gotNewConnection()));
 
+
 }
 
 
@@ -56,7 +57,33 @@ void tcpSocketServer::gotNewConnection()
     QTcpSocket *clientConnection = tcpServer->nextPendingConnection();
     qDebug()<<"new connection "<<clientConnection->peerAddress();
     clients.push_back(clientConnection);
+    qDebug()<<"connected clients: "<<clients.size();
+
+    connect(clientConnection,SIGNAL(disconnected()),this,SLOT(gotNewDisconnection()));
 }
+
+
+
+void tcpSocketServer::gotNewDisconnection()
+{
+  QTcpSocket *clientConnection = (QTcpSocket*)QObject::sender();
+
+  clientConnection->deleteLater();
+
+  for(int i = 0;i<clients.size();i++)
+  {
+      if(clients[i]==clientConnection)
+      {
+
+          clients.erase(clients.begin() + i);
+          break;
+      }
+
+  }
+
+  qDebug()<<"connected clients: "<<clients.size();
+}
+
 
 
 void tcpSocketServer::sendData(QString data)

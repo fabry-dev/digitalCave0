@@ -20,6 +20,7 @@ private:
     std::vector<QTcpSocket*> clients;
 private slots:
     void gotNewConnection(void);
+    void gotNewDisconnection(void);
     void sendData(QString data);
     void startVideo(void);
     void stopVideo(void);
