@@ -23,9 +23,7 @@ SOURCES += main.cpp \
     mpvwidget.cpp \
     touchscreen.cpp \
     ledscreen.cpp \
-    tcpsocketserver.cpp \
     alphaVideoPlayer.cpp \
-    videoplayer.cpp \
     udpserver.cpp
 
 
@@ -34,10 +32,8 @@ HEADERS  += \
     alphaVideoPlayer \
     touchscreen.h \
     ledscreen.h \
-    tcpsocketserver.h \
     mpv_qt_helper.h \
     alphaVideoPlayer.h \
-    videoplayer.h \
     udpserver.h \
     msgdef.h
 

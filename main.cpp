@@ -7,7 +7,6 @@
 #include "qdebug.h"
 #include "QPushButton"
 #include "qmessagebox.h"
-#include "tcpsocketserver.h"
 #include "udpserver.h"
 
 #define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/PTL/ImmersiveRoom/files_kiosk0/"

@@ -6,10 +6,8 @@
 #include <qobject.h>
 #include "qlabel.h"
 #include "mpvwidget.h"
-//#include "mpvwidget2.h"
 #include "alphaVideoPlayer.h"
 #include "qtimer.h"
-#include "videoplayer.h"
 #include "msgdef.h"
 
 class ledScreen : public QLabel
