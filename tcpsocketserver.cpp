@@ -3,11 +3,6 @@
 
 tcpSocketServer::tcpSocketServer(QObject *parent) : QObject(parent)
 {
-    /*
-
-*/
-
-
     QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // use the first non-localhost IPv4 address

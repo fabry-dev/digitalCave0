@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     ledscreen.cpp \
     tcpsocketserver.cpp \
     alphaVideoPlayer.cpp \
-    videoplayer.cpp
+    videoplayer.cpp \
+    udpserver.cpp
 
 
 HEADERS  += \
@@ -36,7 +37,9 @@ HEADERS  += \
     tcpsocketserver.h \
     mpv_qt_helper.h \
     alphaVideoPlayer.h \
-    videoplayer.h
+    videoplayer.h \
+    udpserver.h \
+    msgdef.h
 
 
 FORMS    +=

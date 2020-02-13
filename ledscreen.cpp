@@ -45,13 +45,13 @@ void ledScreen::startVideo(void)
     {
         stopped = false;
         QTimer::singleShot(0,vp,SLOT(play()));
-        emit msgVideoStart();
+        emit sendMsg(msgStartVideo);
     }
     else
     {
         stopped = true;
-                QTimer::singleShot(0,vp,SLOT(stopAndHide()));
-        emit msgVideoStop();
+        QTimer::singleShot(0,vp,SLOT(stopAndHide()));
+        emit sendMsg(msgStopVideo);
     }
 
 
@@ -73,7 +73,10 @@ void ledScreen::keyPressEvent(QKeyEvent *ev)
 
     }
    else if(ev->key() == 16777216)
+   {
+        emit sendMsg(msgQuit);
         exit(0);
+   }
 
 }
 

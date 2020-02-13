@@ -8,6 +8,7 @@
 #include "QPushButton"
 #include "qmessagebox.h"
 #include "tcpsocketserver.h"
+#include "udpserver.h"
 
 #define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/PTL/ImmersiveRoom/files_kiosk0/"
 
@@ -82,19 +83,15 @@ int main(int argc, char *argv[])
     }
 
 
-
-    tcpSocketServer *server = new tcpSocketServer(NULL);
-
+    UDPServer *server = new UDPServer(NULL);
 
 
     ledScreen * ls = new ledScreen(NULL,PATH);
     ls->setGeometry(a.screens()[0]->geometry().x(),a.screens()[0]->geometry().y(),1920,1080);
     ls->showFullScreen();
 
+    a.connect(ls,SIGNAL(sendMsg(QByteArray)),server,SLOT(sendData(QByteArray)));
 
-
-    a.connect(ls,SIGNAL(msgVideoStart()),server,SLOT(startVideo()));
-    a.connect(ls,SIGNAL(msgVideoStop()),server,SLOT(stopVideo()));
 
 
     return a.exec();

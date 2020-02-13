@@ -10,7 +10,7 @@
 #include "alphaVideoPlayer.h"
 #include "qtimer.h"
 #include "videoplayer.h"
-
+#include "msgdef.h"
 
 class ledScreen : public QLabel
 {
@@ -27,8 +27,8 @@ private slots:
     void loadPlayer(void);
     void stopVideo(void);
 signals:
-    void msgVideoStart(void);
-    void msgVideoStop(void);
+    void sendMsg(QByteArray msg);
+
 
 protected:
      void keyPressEvent(QKeyEvent *ev);
