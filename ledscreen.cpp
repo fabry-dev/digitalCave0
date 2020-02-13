@@ -44,13 +44,13 @@ void ledScreen::startVideo(void)
     if(stopped)
     {
         stopped = false;
-        QTimer::singleShot(25,vp,SLOT(play()));
+        QTimer::singleShot(0,vp,SLOT(play()));
         emit msgVideoStart();
     }
     else
     {
         stopped = true;
-                QTimer::singleShot(25,vp,SLOT(stopAndHide()));
+                QTimer::singleShot(0,vp,SLOT(stopAndHide()));
         emit msgVideoStop();
     }
 
