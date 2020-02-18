@@ -12,7 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += multimedia
 QT += multimediawidgets
 QT += multimedia
-TARGET = centralKiosk
+TARGET = kiosk0
 TEMPLATE = app
 
 QT_CONFIG -= no-pkg-config

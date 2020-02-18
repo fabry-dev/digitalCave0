@@ -45,6 +45,8 @@ void alphaVideo::addMedia(QString mediaURL)
 }
 
 
+
+
 void alphaVideo::play(void)
 {
     videoPlayer->play();
@@ -77,12 +79,8 @@ void alphaVideo::newMediaStatus(QMediaPlayer::MediaStatus status)
 }
 
 
-
-
-
 alphaVideoDrawer::alphaVideoDrawer(QLabel *displayLbl):displayLbl(displayLbl)
 {
-
 }
 
 extern QImage qt_imageFromVideoFrame(const QVideoFrame &f);
@@ -90,9 +88,6 @@ extern QImage qt_imageFromVideoFrame(const QVideoFrame &f);
 
 bool alphaVideoDrawer::present(const QVideoFrame &frame)
 {
-    Q_UNUSED(frame);
-    // Handle the frame and do your processing
-
     QImage image = qt_imageFromVideoFrame(frame);
     displayLbl->setPixmap(QPixmap::fromImage(image));
     return true;

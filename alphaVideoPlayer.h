@@ -20,8 +20,6 @@ class alphaVideoDrawer : public QAbstractVideoSurface
     Q_OBJECT
 public:
     alphaVideoDrawer(QLabel *displayLbl);
-
-
 private:
     QLabel *displayLbl;
 
@@ -32,8 +30,6 @@ protected:
             QAbstractVideoBuffer::HandleType handleType = QAbstractVideoBuffer::NoHandle) const
     {
         Q_UNUSED(handleType);
-
-        // Return the formats you will support
         return QList<QVideoFrame::PixelFormat>() << QVideoFrame::Format_ARGB32;
     }
 };

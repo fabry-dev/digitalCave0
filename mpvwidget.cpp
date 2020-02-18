@@ -85,12 +85,19 @@ void mpvWidget::loadFilePaused(QString videoFile)
 }
 
 
+void mpvWidget::rewind(void)
+{
+    //qDebug()<<"rewind";
+    command(QStringList()<< "seek"<<"0"<<"absolute"<<"exact");
+    setProperty("pause",false);
+}
+
 void mpvWidget::stop()
 {
 
     const char *cmd[] = {"stop",NULL, NULL};
 
-    mpv_command(mpv, cmd);
+
 
 }
 
@@ -102,7 +109,7 @@ void mpvWidget::stopAndHide(void)
     const char *cmd[] = {"pause",NULL, NULL};
     mpv_command(mpv, cmd);
 
-     command(QStringList()<< "seek"<<"0"<<"absolute"<<"exact");
+    command(QStringList()<< "seek"<<"0"<<"absolute"<<"exact");
 
     lower();
 
@@ -124,13 +131,10 @@ void mpvWidget::pause(void)
 
 void mpvWidget::play()
 {
-        setProperty("pause",false);
+    setProperty("pause",false);
     const char *cmd[] = {"play",NULL, NULL};
-
     mpv_command(mpv, cmd);
-
     raise();
-
 }
 
 
@@ -196,15 +200,29 @@ void mpvWidget::handle_mpv_event(mpv_event *event)
     switch (event->event_id) {
     case MPV_EVENT_PAUSE:
     {
-        // qDebug()<<"ennnnnd";
-        emit videoOver();
+        // qDebug()<<"paused";
+        emit videoPaused();
         break;
     }
     case MPV_EVENT_IDLE:
     {
-
-        emit videoOver();
+        // qDebug()<<"idle";
+        emit videoIdle();
         break;
+    }
+
+    case MPV_EVENT_START_FILE:
+    {
+
+        emit videoStart();
+        break;
+    }
+    case MPV_EVENT_PLAYBACK_RESTART:
+    {
+        emit videoRestart();
+
+        break;
+
     }
     case MPV_EVENT_PROPERTY_CHANGE: {
         mpv_event_property *prop = (mpv_event_property *)event->data;

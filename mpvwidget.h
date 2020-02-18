@@ -28,11 +28,15 @@ public slots:
     void stopAndHide(void);
     void stop();
     void play();
+    void rewind();
 
 signals:
     void durationChanged(int value);
     void positionChanged(int value);
-    void videoOver();
+    void videoIdle();
+    void videoPaused();
+    void videoStart(void);
+    void videoRestart(void);
     void clicked(QPoint pos);
 protected:
     void initializeGL() Q_DECL_OVERRIDE;

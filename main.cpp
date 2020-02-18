@@ -9,7 +9,7 @@
 #include "qmessagebox.h"
 #include "udpserver.h"
 
-#define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/PTL/ImmersiveRoom/files_kiosk0/"
+#define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/PTL/ImmersiveRoom/kiosk0/files/"
 
 
 
@@ -85,9 +85,19 @@ int main(int argc, char *argv[])
     UDPServer *server = new UDPServer(NULL);
 
 
+
+    touchScreen *ts = new touchScreen(NULL,PATH);
+    ts->setGeometry(a.screens()[1]->geometry().x(),a.screens()[1]->geometry().y(),1080,1920);
+    ts->showFullScreen();
+
+
     ledScreen * ls = new ledScreen(NULL,PATH);
-    ls->setGeometry(a.screens()[0]->geometry().x(),a.screens()[0]->geometry().y(),1920,1080);
+    ls->setGeometry(a.screens()[2]->geometry().x(),a.screens()[2]->geometry().y(),1920,1152);
     ls->showFullScreen();
+
+    a.connect(ls,SIGNAL(bgRestart()),ts,SIGNAL(bgShouldRestart()));
+
+
 
     a.connect(ls,SIGNAL(sendMsg(QByteArray)),server,SLOT(sendData(QByteArray)));
 

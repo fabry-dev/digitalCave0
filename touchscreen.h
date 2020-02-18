@@ -17,8 +17,13 @@ public:
 
 private:
     QString PATH;
+    mpvWidget *bgVp;
 
+private slots:
+    void loadPlayer(void);
 
+signals:
+    void bgShouldRestart(void);
 };
 
 #endif // MAINSCREEN_H

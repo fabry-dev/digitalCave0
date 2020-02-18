@@ -18,24 +18,26 @@ ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
     bg->show();
     bg->raise();
 
-    vp = new mpvWidget(this);
-    vp->resize(size());
+    bgVp = new mpvWidget(this);
+    bgVp->resize(size());
+    bgVp->setProperty("keep-open","yes");
+    bgVp->setLoop(true);
+    bgVp->show();
 
-    vp->setLoop(true);
-    vp->show();
-
-
-    stopped = true;
+    connect(bgVp,SIGNAL(videoRestart()),this,SIGNAL(bgRestart()));
 
     QTimer::singleShot(10,this,SLOT(loadPlayer()));
+
 
 }
 
 void ledScreen::loadPlayer()
 {
-vp->lower();
-vp->loadFilePaused(PATH+"video.mp4");
+    bgVp->lower();
+    bgVp->loadFilePaused(PATH+"ledBg.mp4");
+    bgVp->play();
 }
+
 
 
 
@@ -44,13 +46,13 @@ void ledScreen::startVideo(void)
     if(stopped)
     {
         stopped = false;
-        QTimer::singleShot(0,vp,SLOT(play()));
+        QTimer::singleShot(0,bgVp,SLOT(play()));
         emit sendMsg(msgStartVideo);
     }
     else
     {
         stopped = true;
-        QTimer::singleShot(0,vp,SLOT(stopAndHide()));
+        QTimer::singleShot(0,bgVp,SLOT(stopAndHide()));
         emit sendMsg(msgStopVideo);
     }
 
@@ -62,7 +64,7 @@ void ledScreen::startVideo(void)
 void ledScreen::stopVideo(void)
 {
 
-    vp->pause();
+    bgVp->pause();
 }
 
 void ledScreen::keyPressEvent(QKeyEvent *ev)
