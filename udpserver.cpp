@@ -18,6 +18,17 @@ void UDPServer::sendData(QByteArray data)
 
 
 
+void UDPServer::startIntro(void)
+{
+    sendData("start");
+}
+
+void UDPServer::stopIntro(void)
+{
+
+    sendData("stop");
+}
+
 
 UDPServer::~UDPServer(void)
 {

@@ -18,12 +18,14 @@ public:
 
 private:
     QString PATH;
-    mpvWidget *bgVp;
+    mpvWidget *bgVp,*introVp;
     bool stopped;
 private slots:
     void startVideo(void);
     void loadPlayer(void);
     void stopVideo(void);
+    void startIntroVideo(void);
+    void stopIntroVideo(void);
 signals:
     void sendMsg(QByteArray msg);
     void bgRestart(void);

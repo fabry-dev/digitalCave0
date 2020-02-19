@@ -22,6 +22,8 @@ signals:
 
 public slots:
     void sendData(QByteArray data);
+    void stopIntro(void);
+    void startIntro(void);
 
 private:
     QUdpSocket *udpSocket;

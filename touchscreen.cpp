@@ -1,13 +1,12 @@
 #include "touchscreen.h"
 #include "math.h"
 #include "qdebug.h"
-
+#include "qpushbutton.h"
 
 
 touchScreen::touchScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
 {
     resize(1080,1920);
-    setStyleSheet("QLabel { background-color : white; }");
 
     QLabel *bg = new QLabel(this);
     bg->resize(this->size());
@@ -20,18 +19,60 @@ touchScreen::touchScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PAT
     bgVp->setLoop(false);
     bgVp->show();
 
-    connect(this,SIGNAL(bgShouldRestart()),bgVp,SLOT(rewind()));
 
+    introVp = new mpvWidget(this);
+    introVp->resize(size());
+    introVp->setProperty("keep-open","yes");
+    introVp->setLoop(false);
+    introVp->lower();
+    introVp->show();
+    introVp->setMute(false);
+    connect(introVp,SIGNAL(videoPaused()),this,SLOT(stopIntroVideo()));
+    connect(introVp,SIGNAL(clicked(QPoint)),this,SLOT(stopIntroVideo()));
+
+    connect(this,SIGNAL(bgShouldRestart()),bgVp,SLOT(rewind()));
     QTimer::singleShot(10,this,SLOT(loadPlayer()));
+
+
+    QPushButton *startB = new QPushButton(this);
+    startB->setText("Start video");
+    startB->resize(400,400);
+    startB->move((width()-startB->width())/2,(height()-startB->height())/2);
+    startB->show();
+    connect(startB,SIGNAL(clicked(bool)),this,SLOT(startIntroVideo()));
 
 
 }
 
+
+void touchScreen::startIntroVideo()
+{
+    emit introVideoStarted();
+    introVp->playAndRaise();
+    introVp->raise();
+
+}
+
+void touchScreen::stopIntroVideo()
+{
+    introVp->lower();
+    emit introVideoStopped();
+    introVp->pause();
+    introVp->rewind();
+}
+
+
+
+
+
 void touchScreen::loadPlayer()
 {
-    bgVp->lower();
-    bgVp->loadFilePaused(PATH+"touchBg.mp4");
+
+    bgVp->loadFilePaused(PATH+"touchBg0.mp4");
     bgVp->play();
+
+    introVp->loadFilePaused(PATH+"touchIntro0.mp4");
+
 }
 
 

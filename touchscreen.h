@@ -18,12 +18,19 @@ public:
 private:
     QString PATH;
     mpvWidget *bgVp;
+    mpvWidget *introVp;
+
 
 private slots:
     void loadPlayer(void);
+    void startIntroVideo(void);
+    void stopIntroVideo(void);
 
 signals:
     void bgShouldRestart(void);
+    void introVideoStarted(void);
+    void introVideoStopped(void);
+
 };
 
 #endif // MAINSCREEN_H

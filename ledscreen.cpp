@@ -9,8 +9,8 @@
 
 ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
 {
-    setStyleSheet("QLabel { background-color : red; }");
-    resize(1920,1080);
+
+    resize(1920,1152);
 
 
     QLabel *bg = new QLabel(this);
@@ -26,6 +26,21 @@ ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
 
     connect(bgVp,SIGNAL(videoRestart()),this,SIGNAL(bgRestart()));
 
+
+    introVp = new mpvWidget(this);
+    introVp->resize(size());
+    introVp->setProperty("keep-open","yes");
+    introVp->setLoop(false);
+    introVp->lower();
+    introVp->show();
+    introVp->setMute(true);
+
+
+
+
+
+
+
     QTimer::singleShot(10,this,SLOT(loadPlayer()));
 
 
@@ -34,8 +49,31 @@ ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
 void ledScreen::loadPlayer()
 {
     bgVp->lower();
-    bgVp->loadFilePaused(PATH+"ledBg.mp4");
+    bgVp->loadFilePaused(PATH+"ledBg0.mp4");
     bgVp->play();
+
+    introVp->lower();
+   introVp->loadFilePaused(PATH+"ledIntro0.mp4");
+}
+
+
+void ledScreen::startIntroVideo(void)
+{
+
+    introVp->playAndRaise();
+    introVp->raise();
+    introVp->show();
+}
+
+
+void ledScreen::stopIntroVideo(void)
+{
+
+    introVp->lower();
+    introVp->pause();
+    introVp->rewind();
+
+
 }
 
 
