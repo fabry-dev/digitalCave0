@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 
 
     touchScreen *ts = new touchScreen(NULL,PATH);
-    ts->setGeometry(a.screens()[1]->geometry().x(),a.screens()[1]->geometry().y(),1080,1920);
+    ts->setGeometry(a.screens()[1]->geometry().x(),a.screens()[1]->geometry().y(),1920,1080);
     ts->showFullScreen();
 
 

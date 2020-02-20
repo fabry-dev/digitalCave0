@@ -6,7 +6,7 @@
 
 touchScreen::touchScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
 {
-    resize(1080,1920);
+    resize(1920,1080);
 
     QLabel *bg = new QLabel(this);
     bg->resize(this->size());
@@ -26,7 +26,7 @@ touchScreen::touchScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PAT
     introVp->setLoop(false);
     introVp->lower();
     introVp->show();
-    introVp->setMute(false);
+    introVp->setMute(true);
     connect(introVp,SIGNAL(videoPaused()),this,SLOT(stopIntroVideo()));
     connect(introVp,SIGNAL(clicked(QPoint)),this,SLOT(stopIntroVideo()));
 
