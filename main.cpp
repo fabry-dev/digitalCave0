@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
 
     if (HIDE_CURSOR)
     {
+        qDebug()<<"no cursor";
         QCursor cursor(Qt::BlankCursor);
         a.setOverrideCursor(cursor);
         a.changeOverrideCursor(cursor);
