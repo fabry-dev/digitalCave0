@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 
 
     ledScreen * ls = new ledScreen(NULL,PATH);
-    ls->setGeometry(a.screens()[0]->geometry().x(),a.screens()[0]->geometry().y(),1920,1152);
+    ls->setGeometry(a.screens()[2]->geometry().x(),a.screens()[2]->geometry().y(),1920,1152);
     ls->showFullScreen();
 
     a.connect(ls,SIGNAL(bgRestart()),ts,SIGNAL(bgShouldRestart()));
@@ -103,6 +103,11 @@ int main(int argc, char *argv[])
 
     a.connect(ts,SIGNAL(introVideoStarted()),server,SLOT(startIntro()));
     a.connect(ts,SIGNAL(introVideoStopped()),server,SLOT(stopIntro()));
+
+
+    a.connect(ts,SIGNAL(startContent(int)),ls,SLOT(playContent(int)));
+    a.connect(ts,SIGNAL(stopContent()),ls,SLOT(stopContent()));
+    a.connect(ls,SIGNAL(videoOver()),ts,SLOT(goBack()));
 
     return a.exec();
 

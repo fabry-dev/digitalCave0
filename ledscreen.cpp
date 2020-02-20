@@ -36,8 +36,12 @@ ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
     introVp->setMute(true);
 
 
+    alphaPlayer = new alphaVideo(this);
+    alphaPlayer->resize(860,800);
+    alphaPlayer->move((width()-alphaPlayer->width())/2,(height()-alphaPlayer->height())/2);
 
 
+    connect(alphaPlayer,SIGNAL(stoppedPlaying()),this,SIGNAL(videoOver()));
 
 
 
@@ -46,6 +50,10 @@ ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
 
 }
 
+
+
+
+
 void ledScreen::loadPlayer()
 {
     bgVp->lower();
@@ -53,7 +61,7 @@ void ledScreen::loadPlayer()
     bgVp->play();
 
     introVp->lower();
-   introVp->loadFilePaused(PATH+"ledIntro0.mp4");
+    introVp->loadFilePaused(PATH+"ledIntro0.mp4");
 }
 
 
@@ -63,6 +71,7 @@ void ledScreen::startIntroVideo(void)
     introVp->playAndRaise();
     introVp->raise();
     introVp->show();
+
 }
 
 
@@ -77,6 +86,22 @@ void ledScreen::stopIntroVideo(void)
 }
 
 
+
+void ledScreen::playContent(int id)
+{
+
+
+    alphaPlayer->addMedia(PATH+"kiosk"+QString::number(id+1)+".mp4");
+    alphaPlayer->play();
+    alphaPlayer->show();
+
+}
+
+void ledScreen::stopContent()
+{
+alphaPlayer->hide();
+
+}
 
 
 void ledScreen::startVideo(void)
@@ -112,11 +137,11 @@ void ledScreen::keyPressEvent(QKeyEvent *ev)
         startVideo();
 
     }
-   else if(ev->key() == 16777216)
-   {
+    else if(ev->key() == 16777216)
+    {
         emit sendMsg(msgQuit);
         exit(0);
-   }
+    }
 
 }
 

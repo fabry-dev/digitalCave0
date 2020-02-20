@@ -9,6 +9,8 @@
 #include "alphaVideoPlayer.h"
 #include "qtimer.h"
 #include "msgdef.h"
+#include "QPropertyAnimation"
+
 
 class ledScreen : public QLabel
 {
@@ -20,15 +22,20 @@ private:
     QString PATH;
     mpvWidget *bgVp,*introVp;
     bool stopped;
+    alphaVideo * alphaPlayer;
+
 private slots:
     void startVideo(void);
     void loadPlayer(void);
     void stopVideo(void);
     void startIntroVideo(void);
     void stopIntroVideo(void);
+    void playContent(int id);
+    void stopContent(void);
 signals:
     void sendMsg(QByteArray msg);
     void bgRestart(void);
+    void videoOver(void);
 
 
 protected:

@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     touchscreen.cpp \
     ledscreen.cpp \
     alphaVideoPlayer.cpp \
-    udpserver.cpp
+    udpserver.cpp \
+    powerLabel.cpp
 
 
 HEADERS  += \
@@ -35,7 +36,8 @@ HEADERS  += \
     mpv_qt_helper.h \
     alphaVideoPlayer.h \
     udpserver.h \
-    msgdef.h
+    msgdef.h \
+    powerLabel.h
 
 
 FORMS    +=
