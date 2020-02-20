@@ -42,6 +42,14 @@ void powerLabel::mousePressEvent(QMouseEvent *ev)
 {
     if(zoomOnClick)
     {
+        if(zoomIn->state()==QAbstractAnimation::Running)
+            return;
+        if(zoomOut->state()==QAbstractAnimation::Running)
+            return;
+        if(showAnim->state()==QAbstractAnimation::Running)
+            return;
+        if(hideAnim->state()==QAbstractAnimation::Running)
+            return;
 
         zoomIn->setDuration(100);
         zoomIn->setEasingCurve(QEasingCurve::InCurve);
