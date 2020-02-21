@@ -58,7 +58,7 @@ touchScreen::touchScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PAT
     for(int i = 0;i<4;i++)
     {
         QPixmap pix(PATH+"kiosk"+QString::number(i+1)+".png");
-        pix = pix.scaled(pix.width()*2.5,pix.height());
+        pix = pix.scaled(pix.width()*1,pix.height());
 
         QRect showGeo = QRect((width()-pix.width())/2,(height()-pix.height())/2,pix.width(),pix.height());
         QRect hideGeo = QRect(width()/2,0,0,0);
