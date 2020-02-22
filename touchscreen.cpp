@@ -21,6 +21,7 @@ touchScreen::touchScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PAT
     bgVp->setAttribute(Qt::WA_TransparentForMouseEvents);
     connect(this,SIGNAL(bgShouldRestart()),bgVp,SLOT(rewindAndPlay()));
 
+    isPlayingIntro = false;
     introVp = new mpvWidget(this);
     introVp->resize(size());
     introVp->setProperty("keep-open","yes");
@@ -141,6 +142,7 @@ void touchScreen::startIntroVideo()
     emit introVideoStarted();
     introVp->playAndRaise();
     introVp->raise();
+    isPlayingIntro = true;
 
 }
 
@@ -150,6 +152,7 @@ void touchScreen::stopIntroVideo()
     emit introVideoStopped();
     introVp->pause();
     introVp->rewind();
+    isPlayingIntro = false;
 }
 
 
@@ -164,7 +167,11 @@ void touchScreen::mousePressEvent(QMouseEvent *event)
     else if((abs(width()-x0)<delta)&&((abs(y0)<delta))&&(cornerCount = 1))
     {
         cornerCount = 0;
-        startIntroVideo();
+        if(!isPlayingIntro)
+            startIntroVideo();
+        else
+            stopIntroVideo();
+
     }
     else cornerCount = 0;
 

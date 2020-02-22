@@ -23,7 +23,7 @@ private:
     std::vector<powerLabel *>buttons;
     std::vector<powerLabel *>labels;
     powerLabel *backLbl;
-
+    bool isPlayingIntro;
 private slots:
     void loadPlayer(void);
     void startIntroVideo(void);
