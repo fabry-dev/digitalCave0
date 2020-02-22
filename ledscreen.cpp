@@ -36,12 +36,28 @@ ledScreen::ledScreen(QLabel *parent, QString PATH) : QLabel(parent),PATH(PATH)
     introVp->setMute(true);
 
 
-    alphaPlayer = new alphaVideo(this);
+    for(int i = 0;i<4;i++)
+    {
+        mpvWidget *demoVp = new mpvWidget(this);
+        demoVp->resize(size());
+        demoVp->setProperty("keep-open","yes");
+        demoVp->setLoop(false);
+        demoVp->lower();
+        demoVp->show();
+        demoVp->setMute(true);
+        connect(demoVp,SIGNAL(videoPaused()),this,SIGNAL(videoOver()));
+        demoVps.push_back(demoVp);
+    }
+
+    /*  alphaPlayer = new alphaVideo(this);
     alphaPlayer->resize(860,800);
     alphaPlayer->move((width()-alphaPlayer->width())/2,(height()-alphaPlayer->height())/2);
+*/
 
 
-    connect(alphaPlayer,SIGNAL(stoppedPlaying()),this,SIGNAL(videoOver()));
+
+connect(this,SIGNAL(videoOver()),this,SLOT(stopContent()));
+    //   connect(alphaPlayer,SIGNAL(stoppedPlaying()),this,SIGNAL(videoOver()));
 
 
 
@@ -62,6 +78,12 @@ void ledScreen::loadPlayer()
 
     introVp->lower();
     introVp->loadFilePaused(PATH+"ledIntro0.mp4");
+
+    for(int i = 0;i<4;i++)
+    {
+        demoVps[i]->lower();
+        demoVps[i]->loadFilePaused(PATH+"kiosk"+QString::number(i+1)+".mp4");
+    }
 }
 
 
@@ -90,16 +112,27 @@ void ledScreen::stopIntroVideo(void)
 void ledScreen::playContent(int id)
 {
 
+    demoVps[id]->playAndRaise();
+    demoVps[id]->raise();
+    demoVps[id]->show();
 
-    alphaPlayer->addMedia(PATH+"kiosk"+QString::number(id+1)+".mp4");
+    /*  alphaPlayer->addMedia(PATH+"kiosk"+QString::number(id+1)+".mp4");
     alphaPlayer->play();
-    alphaPlayer->show();
+    alphaPlayer->show();*/
 
 }
 
 void ledScreen::stopContent()
 {
-alphaPlayer->hide();
+    //alphaPlayer->hide();
+    for(auto demoVp:demoVps)
+        if(demoVp->isVisible())
+        {
+            demoVp->lower();
+            demoVp->pause();
+            demoVp->rewind();
+
+        }
 
 }
 

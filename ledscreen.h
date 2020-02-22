@@ -21,6 +21,7 @@ public:
 private:
     QString PATH;
     mpvWidget *bgVp,*introVp;
+    std::vector<mpvWidget*> demoVps;
     bool stopped;
     alphaVideo * alphaPlayer;
 
