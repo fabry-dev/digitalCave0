@@ -134,6 +134,7 @@ void ledScreen::stopContent()
             demoVp->lower();
             demoVp->pause();
             demoVp->rewind();
+            demoVp->hide();
 
         }
 
