@@ -94,6 +94,9 @@ void ledScreen::startIntroVideo(void)
     introVp->raise();
     introVp->show();
 
+
+    qDebug()<<introVp->getProperty("width")<<introVp->getProperty("height")<<introVp->width()<<introVp->height()<<width()<<height();
+
 }
 
 
