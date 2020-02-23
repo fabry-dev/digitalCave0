@@ -35,7 +35,6 @@ mpvWidget::mpvWidget(QWidget *parent, Qt::WindowFlags f)
     mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
 
 
-    mpv::qt::set_option_variant(mpv, "video-aspect", "no");
 
     // Request hw decoding, just for testing.
     mpv::qt::set_option_variant(mpv, "hwdec", "auto");
@@ -50,9 +49,10 @@ mpvWidget::mpvWidget(QWidget *parent, Qt::WindowFlags f)
     mpv_observe_property(mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
     mpv_set_wakeup_callback(mpv, wakeup, this);
 
-    mpv::qt::set_option_variant(mpv, "video-zoom",QString::number(0));
 
+    qDebug()<<"mpv version "<<mpv_get_property_string(mpv,"mpv-version");
 
+    mpv::qt::set_option_variant(mpv, "video-aspect", "no");
 }
 
 mpvWidget::~mpvWidget()
